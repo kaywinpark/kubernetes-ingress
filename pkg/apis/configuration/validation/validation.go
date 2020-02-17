@@ -801,6 +801,10 @@ func validateRedirectURL(redirectURL string, fieldPath *field.Path, validVars ma
 		return append(allErrs, field.Required(fieldPath, "must specify a url"))
 	}
 
+	if !strings.Contains(redirectURL, "://") {
+		return append(allErrs, field.Invalid(fieldPath, redirectURL, "must contain the protocol with '://', for example http://, https:// or ${scheme}://"))
+	}
+
 	if !escapedStringsFmtRegexp.MatchString(redirectURL) {
 		msg := validation.RegexError(escapedStringsErrMsg, escapedStringsFmt, "http://www.nginx.com", "${scheme}://${host}/green/", `\"http://www.nginx.com\"`)
 		return append(allErrs, field.Invalid(fieldPath, redirectURL, msg))

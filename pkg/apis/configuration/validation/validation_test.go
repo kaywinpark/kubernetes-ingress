@@ -946,7 +946,7 @@ func TestValidateRedirectURL(t *testing.T) {
 			msg:         "x-forwarded-proto redirect url use case",
 		},
 		{
-			redirectURL: "${host}${request_uri}",
+			redirectURL: "http://${host}${request_uri}",
 			msg:         "use multi variables, no scheme set",
 		},
 		{
@@ -962,7 +962,7 @@ func TestValidateRedirectURL(t *testing.T) {
 			msg:         "url with escaped quotes",
 		},
 		{
-			redirectURL: "{abc}",
+			redirectURL: "http://{abc}",
 			msg:         "url with curly braces with no $ prefix",
 		},
 	}
@@ -984,6 +984,10 @@ func TestValidateRedirectURLFails(t *testing.T) {
 		{
 			redirectURL: "",
 			msg:         "url is blank",
+		},
+		{
+			redirectURL: "/uri",
+			msg:         "url does not start with http://, https:// or ${scheme}://",
 		},
 		{
 			redirectURL: "$scheme://www.$host.com",

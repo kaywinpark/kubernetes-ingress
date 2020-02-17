@@ -992,7 +992,7 @@ In the example below, NGINX responds with a redirect when a response from an ups
 codes: [404]
 redirect:
   code: 301
-  url: ${scheme}://cafe.example.com/error_${status}.html
+  url: ${scheme}://cafe.example.com/error.html
 ```
 
 ```eval_rst
@@ -1026,8 +1026,8 @@ return:
   type: application/json
   body: "{\"msg\": \"You don't have permission to do this\"}"
   headers:
-  - name: x-debug-original-status
-    value: ${status}
+  - name: x-debug-original-statuses
+    value: ${upstream_status}
 ```
 
 ```eval_rst
